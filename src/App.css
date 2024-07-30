@@ -1,0 +1,169 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* themeing css */
+
+/* fonts */
+.noyh-light-moufit{
+  font-family: "Noyh-Light"!important;
+}
+.noyh-regular-moufit{
+  font-family: "Noyh-Regular"!important;
+}
+.noyh-bold-moufit{
+  font-family: "Noyh-Bold",sans-serif!important;
+}
+
+.rubik-ligt-moufit{
+  font-family: "Rubik-Light",sans-serif!important;
+}
+.rubik-medium-moufit{
+  font-family: "Rubik-Medium",sans-serif!important;
+}
+.rubik-regular-moufit{
+  font-family: "Rubik-Regular",sans-serif!important;
+}
+.rubik-bold-moufit{
+  font-family: "Rubik-Bold",sans-serif!important;
+}
+.JosefinSans{
+  font-family: "JosefinSans-Regular",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif!important;
+}
+
+/* margin / padding */
+.moufit-margin-zero{
+  margin: 0!important;
+}
+.moufit-padding-zero{
+  padding: 0!important;
+}
+
+
+/* width */
+.fullwidth-moufit{
+width:100%;
+max-width: 100%;
+}
+
+.nintywidth-moufit{
+  width:90%;
+  max-width: 90%;
+  }
+
+  /* color */
+.moufit-primary-color{
+  color:#6737B4;
+}
+.moufit-white-color{
+  color:white;
+}
+.moufit-black-color{
+  color:black;
+}
+
+/* bg */
+.moufit-primary-background{
+  background: #7D54C5;
+}
+.moufit-white-background{
+  background:white;
+}
+.moufit-black-background{
+  background:black;
+}
+
+/* gap */
+.moufit-gap{
+  margin: 50px 0px!important;
+}
+.moufit-gap-top{
+  margin-top: 50px!important;
+}
+.moufit-gap-bottom{
+  margin-bottom: 50px!important;
+}
+
+@media(max-width:900px){
+ 
+  .moufit-gap{
+    margin: 30px 0px!important;
+  }
+  .moufit-gap-top{
+    margin-top: 30px!important;
+  }
+  .moufit-gap-bottom{
+    margin-bottom: 30px!important;
+  }
+}
+
+.moufit-link{
+  text-decoration:none!important;
+  cursor: pointer;
+}
+
+/* btn */
+.buttonContainerCstm{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnImageCstm{
+  background: transparent;
+  color: white;
+  border:none;
+  margin-right: 5px;
+  cursor:pointer;
+}
+
+.btnImageCstmBlack{
+  background: transparent;
+  color: rgb(0, 0, 0);
+  border:none;
+  margin-right: 5px;
+  cursor:pointer;
+  padding: 0;
+}
+
+.span-grid{
+  margin-top: 2px;
+}
+
+
+/* textType */
+

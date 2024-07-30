@@ -1,0 +1,43 @@
+.bannerContainerHeader{
+    width: 100%;
+    position: relative;
+}
+.headinMainBanner{
+    font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 44px;
+text-align: center;
+text-transform: uppercase;
+color: #FAFAFA;
+}
+.textNoxHeading{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+.bannerImg{
+    object-fit: cover;
+filter: brightness(0.5);
+}
+.imageContainerMobile{
+    display: none;
+}
+@media(max-width:900px){
+    .imageContainerMobile{
+        display: block;
+    }
+    .bannerImgMobile{
+        object-fit: cover;
+    filter: brightness(0.4);
+    height: 352px;
+    }
+    .imageContainerDesktop{
+        display: none;
+    }
+}

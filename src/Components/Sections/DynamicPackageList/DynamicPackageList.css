@@ -1,0 +1,52 @@
+.dynamic-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 4em;
+    cursor: pointer;
+  }
+  .dynamic-list-title{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .dynamic-list-item {
+    position: relative;
+    width: calc(33.33% - 10px);
+    margin: 5px;
+    overflow: hidden;
+}
+
+.item-content {
+    height: 80px;
+    background-color: #ccc;
+    transition: background-color 0.3s;
+    padding: 10px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  .item-hover {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100%;
+    background-color: #ff0000;
+    transition: left 0.3s;
+    pointer-events: none;
+    clip-path: polygon(0 0, 100% 0, 80% 50%, 100% 100%, 0 100%);
+    
+  }
+  
+  .dynamic-list-item:hover .item-content {
+    background-color: transparent;
+  }
+  
+  .dynamic-list-item:hover .item-hover {
+    left: 0;
+  }
+  

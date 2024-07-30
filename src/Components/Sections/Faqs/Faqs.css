@@ -1,0 +1,95 @@
+.css-ahj2mt-MuiTypography-root {
+    margin: 0;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    text-align: left!important;
+}
+.FaqContainer{
+    width: 60%;;
+    max-width: 60%;
+    margin:0 auto;
+    margin-bottom:50px;
+}
+
+.Mui-expanded svg{
+fill: #6737B4;
+
+}
+.headingAccordian{
+    font-style: normal;
+font-weight: 600!important;
+font-size: 16px!important;
+line-height: 21px!important;
+}
+
+.Mui-expanded .headingAccordian{
+    font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 21px;
+color: #6737B4;
+
+}
+
+.titleSection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.sectionMainHeading{
+    font-style: normal;
+font-weight: 700;
+font-size: 34px;
+line-height: 40px;
+text-align: center;
+color: #1A1A1A;
+margin-bottom: 0;
+}
+.sectionMainPara{
+    font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 26px;
+text-align: center;
+color: #666666;
+margin-bottom: 50px;
+width: 70%;
+
+}
+.flex-heading{
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width:900px){
+    .FaqContainer{
+        width: 90%;;
+        max-width: 90%;
+        margin-bottom:30px;
+    }
+    .titleSection {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+    .sectionMainPara {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 26px;
+        text-align: center;
+        color: #666666;
+        margin-bottom: 50px;
+        width: 90%;
+    }
+}

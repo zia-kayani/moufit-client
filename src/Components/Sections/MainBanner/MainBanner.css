@@ -1,0 +1,132 @@
+.BannerMain {
+    width: 100%;
+    position: relative;
+    max-height: 745px;
+    height: 745px!important;
+    height: auto;
+    object-fit: cover;
+  }
+  .BannerMain .mainImage {
+    filter: brightness(0.5);
+    width: 100%;
+  }
+  .textboxHeroImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 0%;
+  }
+  .textboxHero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    color: white;
+  }
+  .para-cstm {
+    font-size: 16px;
+    width: 80%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    text-transform: uppercase;
+  }
+  .heading-cstm {
+    font-size: 50px;
+    width: 40%;
+    text-align: center;
+    margin: 0 auto;
+    text-transform: uppercase;
+  }
+  .btn-wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-wrap img {
+    width: 35px;
+    margin-right: 10px;
+  }
+  .btn-wrap button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: white;
+  }
+  .mainVideo {
+    width: 100%;
+    max-height: 700px;
+    height: 700px;
+    object-fit: cover;
+  }
+
+  .overlay-bg-text {
+    width: 45%;
+ 
+ 
+}
+
+
+  @media (max-width: 767px) {
+      .BannerMain {
+          width: 100%;
+          position: relative;
+          max-height: 550px;
+          height: auto;
+          object-fit: cover;
+        }
+    .BannerMain .mainImage {
+      filter: brightness(0.5);
+      height: 552px;
+      object-fit: cover;
+    }
+    .para-cstm {
+      font-size: 13px;
+      width: 80%;
+      text-align: center;
+      justify-content: center;
+      margin: 0 auto;
+      text-transform: uppercase;
+    }
+    .heading-cstm {
+      font-size: 25px;
+      font-weight: 600;
+      width: 80%;
+      text-align: center;
+      margin: 0 auto;
+      text-transform: uppercase;
+    }
+    .textboxHeroImage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .navigationMain .w-full {
+      background: black;
+      padding: 50px 0px;
+    }
+    .mainVideo {
+      width: 100%;
+      height: 552px;
+      object-fit: cover;
+      filter: brightness(0.5);
+    }
+    .overlay-bg-text{
+        width:100%;
+    }
+  }
+  

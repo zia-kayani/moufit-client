@@ -1,0 +1,106 @@
+.cstmGridBox .itemCustom {
+  height: 590px;
+  max-height: 590px;
+  padding: 0 !important;
+  object-fit: cover;
+
+}
+
+.leftItem,
+.rightItem {
+  box-shadow: none !important;
+  background-color: '#FAFAFA'
+}
+
+.css-14wrnr1-MuiPaper-root,
+.cstmGridBox {
+  padding: 0px !important;
+  box-shadow: none !important;
+  height: 590px;
+  max-height: 590px;
+}
+
+.RightImage {
+  width: 100%;
+}
+
+.gridLeft .leftItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 75%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.secHeading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 37px;
+  color: #1a1a1a;
+}
+
+.secSubHeading {
+  font-style: normal;
+  font-weight: 600;
+  /* font-size: 18px; */
+  font-size: 2em;
+  line-height: 30px;
+}
+
+.secPara {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  color: #151515;
+  mix-blend-mode: normal;
+  opacity: 0.8;
+}
+
+.sec-btn-cstm-grid {
+  background: transparent;
+  border: none;
+  border: none;
+  font-weight: 600;
+  margin-right: 3px;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .gridLeft .leftItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    max-height: auto;
+  }
+
+  .gridLeft .rightItem {
+    height: auto;
+    max-height: auto;
+  }
+
+  .cstmGridBox .itemCustom {
+    height: auto;
+    max-height: auto;
+    padding: 0 !important;
+  }
+
+  .css-14wrnr1-MuiPaper-root,
+  .cstmGridBox {
+    padding: 0px !important;
+    box-shadow: none !important;
+    height: auto;
+    max-height: auto;
+  }
+
+  .gridLeft {
+    margin-top: 30px !important;
+    margin-bottom: 50px !important;
+  }
+}

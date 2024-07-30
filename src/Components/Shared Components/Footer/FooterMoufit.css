@@ -1,0 +1,144 @@
+.footerMain {
+  width: 100%;
+  background-color: black;
+  min-width: 100%;
+  padding: 50px 0px;
+  margin-top: -10px;
+}
+
+.footerBox{
+  border-bottom: 1px solid white;
+}
+
+.footerBottomRow{
+  width: 100%;
+  border-color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.footerContainer {
+  width: 90%;
+  margin: 0 auto;
+  color: white;
+}
+.socialIcons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 40%;
+}
+.footerItem {
+  background: transparent !important;
+  border: none !important;
+  color: white !important;
+}
+.footerSection1 {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  text-align: left;
+}
+.quicklinks1Footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  color: white;
+}
+.footerLinkList {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+}
+.footerLinkList a {
+  all: none;
+  color: white;
+  text-decoration: none;
+}
+.footerLinkList li {
+  padding: 5px 0px;
+}
+.contactInfoFooter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.addressFooter {
+  display: flex;
+}
+.footerItem5 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left !important;
+}
+.titleFooterLinks {
+  text-align: left;
+}
+.inputFooter {
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+}
+.inputFieldNewsletter {
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding-left: 10px;
+}
+.imageNewsletter {
+  background: purple;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px;
+  margin-right: 10px;
+}
+
+.txtParaAbout {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  opacity: 0.8;
+}
+.titleWidget {
+  font-style: normal;
+font-weight: 700;
+font-size: 18px;
+margin: 0;
+}
+
+.menuItemMainFooter{
+  font-style: normal;
+font-weight: 500;
+font-size: 13px;
+line-height: 10px;
+opacity: 0.8;
+}
+.cstmWidgit5Para,
+.addressFooter .menuItemMainFooter{
+  line-height: 20px;
+}
+.BoldItem{
+  opacity: 1;
+}
+.newsletterBtn{
+  background: white;
+  border: none;
+  cursor: pointer;
+}
+
+
+@media(max-width:900px){
+  .footerColumn2{display: none;}
+  .footerColumn3{display: none;}
+  .footerColumn4{display: none;}
+}

@@ -1,0 +1,29 @@
+.blog-post {
+    border: 1px solid #ccc;
+    padding: 4em 1em 1em 7em;
+    text-align: left;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: flex-start; */
+  }
+  
+  .title {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    padding-left: 1em;
+    /* text-align: left; */
+  }
+  
+  .author {
+    font-style: italic;
+    margin-bottom: 1em;
+    padding-left: 1em;
+    /* text-align: left; */
+  }
+  
+  .content {
+    line-height: 1.5;
+    text-align: left;
+    display: inline-block;
+  }
+  

@@ -1,0 +1,66 @@
+/* .dummyHover:hover{
+  color: blue;
+} */
+
+
+
+.ItemCstm {
+  border-radius: 0px !important;
+  color: #FAFAFA !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 410px;
+  max-height: 410px;
+}
+.Item1Grid {
+  background: #151515 !important;
+}
+.Item2Grid {
+  background: #7d54c5 !important;
+}
+.Item3Grid {
+  background: #151515 !important;
+}
+.heading-grid{
+  font-style: normal;
+font-weight: 700;
+font-size: 28px;
+line-height: 31px;
+text-align: center;
+color: #FAFAFA;
+margin-bottom: 0;
+}
+.para-grid {
+  font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    color: #FAFAFA;
+    mix-blend-mode: normal;
+    opacity: 0.8;
+    width: 55%;
+    max-width: 55%;
+}
+.btn-cstm-grid{
+  font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    color: #FAFAFA;
+}
+
+.icon-grid {
+  width: 75px;
+  height: 75px;
+}
+
+@media(max-width:900px){
+  .para-grid {
+    width: 68%;
+    max-width: 68%;
+}
+}

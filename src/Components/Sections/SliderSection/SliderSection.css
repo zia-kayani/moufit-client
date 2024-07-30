@@ -1,0 +1,138 @@
+.MainSliderDiv{
+    width: 95%!important;
+   margin:  0 auto;
+   /* height: 600px */
+}
+
+.MainSliderDiv > .slick-slider {
+  height: 150px;
+}
+
+.singleImg{
+    height: 100px;
+    width: 170px;
+    object-fit: cover;
+  }
+  .singleImg:hover{
+    height: 105;
+    width: 175px;
+    object-fit: cover;
+  }
+.slide-cstm{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+/* the slides */
+.about-page .slick-slide{
+    margin: 0 0.7rem;
+    height: fit-content;
+}
+.home .slick-slide {
+    margin: 0 0.7rem;
+    height: fit-content;
+}
+.slick-slide {
+ 
+    height: fit-content;
+}
+/* the parent */
+.slick-list {
+    margin: 0 -0.6rem;
+}
+.about-page .slick-track{
+    height: 450px;
+    max-height: 450px;
+}
+.home .slick-track{
+    height: 450px;
+    max-height: 450px;
+}
+.about-page .slick-list{
+    height: 450px;
+    max-height: 450px;
+}
+.home .slick-list{
+    height: 450px;
+    max-height: 450px;
+}
+.slick-dots {
+    bottom: -22px;
+    width: 100%;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+.slick-next {
+    right: -25px;
+    display: none!important;
+}
+
+.titleDivSecSlider{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    margin: 0 auto;
+
+}
+.titleDivSecSlider .sectionTitleSlider{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 40px;
+    text-align: center;
+    color: #1A1A1A;
+    
+}
+.slide-heading{
+    font-style: normal;
+font-weight: 700;
+font-size: 22px;
+line-height: 24px;
+text-align: center;
+color: #2B2024;
+mix-blend-mode: normal;
+opacity: 0.8;
+}
+.slide-para{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #151515;
+    mix-blend-mode: normal;
+    opacity: 0.8;
+}
+
+@media(max-width:867px){
+    .slick-slide {
+        margin: 0 0px;
+    }
+    /* the parent */
+    .slick-list {
+        margin: 0 -0px;
+    }
+    .slick-track{
+        height: fit-content;
+        max-height: fit-content;
+    }
+    .titleDivSecSlider{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 86%;
+        margin: 0 auto;
+    
+    }
+    .about-page .slick-slide{
+        margin: 0 0rem;
+        height: fit-content;
+    }
+    .home .slick-slide {
+        margin: 0 0rem;
+        height: fit-content;
+    }
+}

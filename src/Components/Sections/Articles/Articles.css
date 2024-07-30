@@ -1,0 +1,118 @@
+.articlesMain {
+  margin: 50px 0px;
+}
+.articleCstm {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 30px 0px;
+}
+.imgArticles {
+  width: 100%;
+}
+.articlesTextbox {
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+}
+.articleMainText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.articleMainText h1 {
+  margin-bottom: 0 !important;
+}
+.articleMainText p {
+  margin-bottom: 50px !important;
+}
+.captionArticles{
+  font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 180.2%;
+color: #828282;
+}
+.titleArticles{
+  font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 22px;
+color: #2B2024;
+mix-blend-mode: normal;
+opacity: 0.8;
+}
+.paraArticles{
+  font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+color: #151515;
+}
+.btnLinkArticle{
+  font-style: normal;
+font-weight: 600;
+font-size: 12px;
+text-align: center;
+text-decoration-line: underline;
+text-transform: uppercase;
+color: #C02C39;
+}
+
+.titleSection{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.sectionMainHeading{
+  font-style: normal;
+font-weight: 700;
+font-size: 34px;
+line-height: 40px;
+text-align: center;
+color: #1A1A1A;
+margin-bottom: 0;
+}
+.sectionMainPara{
+  font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 26px;
+text-align: center;
+color: #666666;
+margin-bottom: 50px;
+width: 70%;
+
+}
+
+@media(max-width:900px){
+  .titleSection {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      margin: 0 auto;
+      flex-direction: column;
+  }
+  .sectionMainPara {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 26px;
+      text-align: center;
+      color: #666666;
+      margin-bottom: 50px;
+      width: 85%;
+  }
+  .articleCstm {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 30px 0px;
+}
+}

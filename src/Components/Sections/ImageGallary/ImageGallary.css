@@ -1,0 +1,12 @@
+.imageGallaryImage{
+    width:100%
+}
+.locationGallaryMain{
+    width: 90%;
+    margin: 0 auto;
+}
+.imageGallaryItem{
+    background: transparent!important;
+    box-shadow: none!important;
+    padding:0px!important;
+}

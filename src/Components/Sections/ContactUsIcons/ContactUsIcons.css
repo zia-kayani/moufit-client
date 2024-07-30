@@ -1,0 +1,58 @@
+.contactIconItem {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+}
+
+.iconWrapper{
+    display: flex;
+    justify-content: center;
+}
+.contactIconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 0px 25px !important;
+}
+
+.contactIconColumn:nth-child(1) .imageCstmIcon {
+    width: fit-content;
+    height: 50px !important;
+    max-height: 50px !important;
+}
+
+.contactIconColumn:nth-child(2) .imageCstmIcon {
+    width: fit-content;
+    height: 50px !important;
+    max-height: 50px !important;
+}
+
+.contactIconColumn:nth-child(3) .imageCstmIcon {
+    width: fit-content;
+    height: 50px !important;
+    max-height: 50px !important;
+}
+
+
+.contactIconColumn {
+    border: none !important;
+}
+
+.iconCstmHeading {
+    margin-bottom: 0 !important;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #202124;
+
+}
+
+.iconCstmInfo {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    color: #696969;
+}

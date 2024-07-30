@@ -1,0 +1,44 @@
+.IconBoxMain {
+  background: black;
+  padding: 50px 80px;
+}
+.iconBox {
+  display: flex;
+  align-items: flex-start;
+}
+.gridItemIcon {
+  background: transparent !important;
+  border: none !important;
+}
+.iconTextBox {
+  color: white !important;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 20px;
+}
+.iconBoxHeading {
+  margin: 0 !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 24px;
+  color: #ffffff;
+  mix-blend-mode: normal;
+  opacity: 0.8;
+}
+.iconBoxPara {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 22px;
+  color: #dedede;
+  mix-blend-mode: normal;
+  opacity: 0.8;
+}
+@media(max-width:900px){
+    .IconBoxMain {
+        background: black;
+        padding: 50px 20px;
+      }
+}

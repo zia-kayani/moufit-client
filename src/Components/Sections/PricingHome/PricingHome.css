@@ -1,0 +1,199 @@
+.PricingGridRow{
+    justify-content: center;
+}
+.pricingContext {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.PricingItem2 {
+    background: #6737b4 !important;
+    color: white !important;
+}
+
+.PricingItem {
+    height: 510px;
+    max-height: 510px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.PricingMain {
+    margin: 50px 0px;
+}
+
+.pricingInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pricingFeatures {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.textMonthly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pricingFeatures {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: flex-start;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.iconTextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.iconPricing {
+    margin-right: 10px;
+}
+
+.subheadingPricing {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    opacity: 0.8;
+    margin: 0 !important;
+    padding-bottom: 10px;
+}
+
+.headingPricing {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 !important;
+    padding-bottom: 10px;
+}
+
+.costPricing {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 55px;
+    text-align: center;
+    margin: 0 !important;
+    padding-bottom: 10px;
+}
+
+.planPricing {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    margin: 0 !important;
+    padding-bottom: 10px;
+}
+
+.textPricing {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 40px;
+    margin: 0 !important;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.sectionMainHeading {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 40px;
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 0;
+}
+
+.sectionMainPara {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    color: #666666;
+    margin-bottom: 50px;
+    width: 70%;
+}
+
+.svgCheckMain {
+    margin-right: 10px;
+}
+
+.PricingColumn .PricingItem:hover {
+    background-color: #6737b4;
+    color: white;
+}
+
+.PricingColumn .iconPricing:hover {
+    stroke: white;
+}
+
+/* .PricingColumn:nth-child(2) .svgCheck {
+    stroke: #ffffff;
+}
+
+.PricingColumn:nth-child(2) .PricingItem {
+    background-color: #6737b4;
+    color: #ffffff;
+}
+
+.PricingColumn:nth-child(2):hover .svgCheck {
+    stroke: #6737b4;
+}
+
+.PricingColumn:nth-child(2):hover .PricingItem {
+    background-color: #ffffff;
+    color: #00000099;
+} */
+
+@media (max-width: 900px) {
+    .titleSection {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .sectionMainPara {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 26px;
+        text-align: center;
+        color: #666666;
+        margin-bottom: 50px;
+        width: 90%;
+    }
+}
