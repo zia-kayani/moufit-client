@@ -363,7 +363,7 @@ function FooterMoufit() {
                             <Typography  className='txtParaAbout'>
                             2020 Moufit DMCC. Moufit DMCC is Registered & Licensed as a FREEZONE Company under the Rules & Regulations of DMCC. 
                             </Typography>
-                            <Link to={'/terms-and-condition'}>
+                            <Link style={{color: '#fff', textDecoration: 'none'}} to={'/terms-and-condition'}>
                                Terms & Conditions 
                             </Link>
                     </Box>
