@@ -145,19 +145,9 @@ const MenuItemsComp = ({ items, depthLevel, currentLink }) => {
           />
         </>
       ) : (
-        <Link style={{
-          // color: 'inherit',
-          // textDecoration: 'none',
-          // display: 'block',
-          // padding: '0.5rem',
-          // transition: 'color 0.3s',
-        }}
-        // onMouseEnter={(e) => (e.target.style.color = 'white')}
-        // onMouseLeave={(e) => (e.target.style.color = 'inherit')}
-        onClick={() => {
-          console.log(currentLink)
-          // console.log(window.location)
-          console.log('path',window.location.pathname, items.link)}} to={items.link}>{items.label}</Link>
+        <Link className='nav-link' to={items.link}>
+          {items.label}
+        </Link>
       )}
     </li>
   </>
