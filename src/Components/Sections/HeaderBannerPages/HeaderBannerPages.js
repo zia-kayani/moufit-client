@@ -9,11 +9,12 @@ function HeaderBannerPages({ text, imgData }) {
         <>
             <div className='bannerContainerHeader'>
                 <div className='imageContainerDesktop'>
+                    {console.log('imgData?.imgSrc', imgData)}
                     <img className='bannerImg fullwidth-moufit' src={imgData?.imgSrc ?? imgData?.desktop_img ?? "./MoufitMedia/moufitPagesBanner.jpg"} alt={text ?? '...'} />
                 </div>
                 <div className='imageContainerMobile'>
-                                                                 {/* imgData?.imgSrc ?? */}
-                    <img className='bannerImgMobile fullwidth-moufit' src={imgData?.mobile_img ?? "\MoufitMedia\overlay.png"} alt={text ?? '...'} />
+                    {/* <img className='bannerImgMobile fullwidth-moufit' src={imgData?.mobile_img ?? "\MoufitMedia\overlay.png"} alt={text ?? '...'} /> */}
+                    <img className='bannerImgMobile fullwidth-moufit' src={imgData?.mobile_img ?? "./MoufitMedia/moufitPagesBanner.jpg"} alt={text ?? '...'} />
                 </div>
                 <div className='textNoxHeading'>
                     <h1 className='headinMainBanner noyh-bold-moufit'>
