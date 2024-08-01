@@ -78,7 +78,8 @@ background: #7D54C5!important;
   .menu-items button:hover {
     /* background-color: white; */
     color: white;
-    font-size: 17px;
+    font-size: 15px;
+    transition: all 0.3s ease;
   }
   
   .menu-items {
