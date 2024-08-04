@@ -8,13 +8,24 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useForm, useFieldArray } from "react-hook-form";
 import { FieldArray } from "formik";
-import { AddCircleOutlineOutlined, CheckBox, DeleteOutline } from "@mui/icons-material";
+import {
+  AddCircleOutlineOutlined,
+  CheckBox,
+  DeleteOutline,
+} from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { db } from "../../../firebase-config";
-import { addDoc, collection } from "firebase/firestore";
-import { newAuth, newDB } from "../../../firebase-new-config";
-import { stubFalse } from "lodash";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { auth, db } from "../../../firebase-config";
+import Snackbar from '@mui/material/Snackbar';
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import CloseIcon from '@mui/icons-material/Close';
 
 const steps = ["User", "Partner", "Bank", "Document", "Terms"];
 const sampleRichText = `<p>Moufit DMCC is a DMCC Free Zone company incorporated under the laws of Dubai, United Arab Emirates with business licence number DMCC179386 (“Moufit”, “We”, “Our”, “Us”) and having its principal place of business at Office 106, The Binary, Al Abraj Street, Business Bay, P.O. Box 413383, Dubai, United Arab Emirates.</p>
@@ -97,6 +108,7 @@ function JoinInForm() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const [nextBtnDisplay, setNextBtnDisplay] = useState(true);
+  const [open, setOpen] = useState(false);
 
   let [stepperFormOne, setStepperFormOne] = useState({
     firstName: "",
@@ -308,11 +320,10 @@ function JoinInForm() {
 
   const handleImageChange = (e, target) => {
     if (e) {
-        console.log(stepperFormFour)
       try {
         const file = e?.target?.files[0];
         const reader = new FileReader();
-        reader.onloadend = async() => {
+        reader.onloadend = async () => {
           const imageData = reader?.result;
 
           // Set the optimized image URL
@@ -322,28 +333,27 @@ function JoinInForm() {
           //     ...prevState,
           //     // [e.target.name]: e.target.value,
           //     [e.target.name]: imageData,
-        console.log('imageData Here', imageData)
-        setStepperFormFour((prevState) => ({
+          console.log("imageData Here", imageData);
+          setStepperFormFour((prevState) => ({
             ...prevState,
             // [e.target.name]: e.target.value,
             [`${e.target.name}Url`]: imageData,
-    
+
             // [e.target.name]: e.target.value?.substring(e.target.value?.lastIndexOf('-')+1) ,
-    
+
             // [e.target.name]: handleImageChange(e),
           }));
 
-          console.log('stepperFormFour Here', stepperFormFour)
-        
-        //   }));
-        // return imageData
-        // return reader?.result
+          console.log("stepperFormFour Here", stepperFormFour);
 
-    };
-    if (file) {
-        reader?.readAsDataURL(file);
-        // let tempUrl = reader?.readAsDataURL(file);
-        //   return tempUrl;
+          //   }));
+          // return imageData
+          // return reader?.result
+        };
+        if (file) {
+          reader?.readAsDataURL(file);
+          // let tempUrl = reader?.readAsDataURL(file);
+          //   return tempUrl;
         }
       } catch (err) {
         console.error(err);
@@ -351,11 +361,11 @@ function JoinInForm() {
     }
     // console.log('target',`${target}`)
   };
-  const onChangeThree = async(e) => {
+  const onChangeThree = async (e) => {
     try {
       console.log(stepperFormThree);
       //   console.log(e.target.value?.substring(e.target.value?.lastIndexOf('-')+1));
-         handleImageChange(e)
+      handleImageChange(e);
       setStepperFormFour((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
@@ -403,7 +413,7 @@ function JoinInForm() {
 
   const onChangeFive = (e) => {
     try {
-        console.log(e.target.checked)
+      console.log(e.target.checked);
       setStepperFormFive({ agreeToTerms: e.target.checked });
     } catch (err) {
       console.error(err);
@@ -525,58 +535,56 @@ function JoinInForm() {
       business_phone: stepperFormTwo.businessPhone,
       is_agreed: stepperFormFive.agreeToTerms,
       documents: [
-        '1', '2', '3'
+        "1",
+        "2",
+        "3",
         // stepperFormFour.file1,
         // stepperFormFour.file2,
         // stepperFormFour.file3,
-      ]
-    }
+      ],
+    };
 
     return obj;
-  }
+  };
 
   const sendPartnerApproval = async () => {
-    console.log(stepperFormOne,
+    console.log(
+      stepperFormOne,
       stepperFormTwo,
       stepperFormThree,
-      stepperFormFour,)
+      stepperFormFour
+    );
 
-      // create partner as user
-      const partnerInfo = mapToCollectionFormat();
+    // create partner as user
+    const partnerInfo = mapToCollectionFormat();
 
-      try {
-        const response = await createUserWithEmailAndPassword(
-          newAuth,
-          partnerInfo.email,
-          "12345678"
-        );
-        partnerInfo.id = response.user.uid;
-
-        console.log('partnerInfo', partnerInfo)
-        // add partner's data to users collection
-        const newDBRef = collection(newDB, "users");
-        let tempResp = await addDoc(newDBRef, partnerInfo);
-        console.log("tempResp", tempResp);
-      } catch (error) {
-        console.log("error", error);
-      }
-return;
-
-    const newDBRef = collection(newDB, "partners_approval");
     try {
-      stepperFormTwo.locations = getValues("locations") || [];
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        partnerInfo.email,
+        "12345678"
+      );
+      partnerInfo.id = response.user.uid;
 
-      let tempResp = await addDoc(newDBRef, {
-        stepperFormOne,
-        stepperFormTwo,
-        stepperFormThree,
-        stepperFormFour,
-        // stepperFormFive,
-      });
-      console.log(tempResp);
-    } catch (err) {
-      console.log(err);
+      console.log("partnerInfo", partnerInfo);
+      // add partner's data to users collection
+
+      const resp = await setDoc(doc(db, "users", partnerInfo.id), partnerInfo);
+
+      if (resp) {
+        // success
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      } else {
+        // sommething went wrong
+      }
+    } catch (error) {
+      console.log("error", error);
+      if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
+        setOpen(true);
+        console.log("error", error.message);
+      }
     }
+    return;
   };
   const useFormPropsObj = {
     getValues,
@@ -591,8 +599,39 @@ return;
     }
   }, [watch]);
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  
+
   return (
     <>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Email already exists. Please signup using another email"
+        action={action}
+      />
       <Box sx={{ width: "50%", margin: "50px auto" }}>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
@@ -656,14 +695,6 @@ return;
           {activeStep === 1 ? (
             <>
               <div className="inputContainer noyh-regular-moufit partnerForm">
-                {/* <select className='commonInput commonSelect' id="category" placeholder='Category' onChange={onChangeTwo} name="category" value={stepperFormTwo.category}>
-                                    <option className='commonOptiom' disabled value="selectCategory" selected >Select Category</option>
-                                    <option className='commonOptiom' value="bronze">Bronze</option>
-                                    <option className='commonOptiom' value="silver">Silver</option>
-                                    <option className='commonOptiom' value="gold">Gold</option>
-                                    <option className='commonOptiom' value="platinum">Platinum</option>
-                                </select> */}
-
                 <input
                   className="commonInput"
                   type="text"
@@ -897,22 +928,24 @@ return;
             <>
               <div className="inputContainer noyh-regular-moufit termsForm">
                 <div dangerouslySetInnerHTML={{ __html: sampleRichText }} />
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                }}>
-                <input
-                  type="checkbox"
-                  id="agreeToTerms"
-                  value={stepperFormFive?.agreeToTerms ?? false}
-                  onClick={onChangeFive}
-                  name="agreeToTerms"
-                />
-                {/* <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"> */}
-                <label htmlFor="agreeToTerms">
-                  I Agree to the terms and conditions !
-                </label>
-              </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    id="agreeToTerms"
+                    checked={stepperFormFive?.agreeToTerms ?? false}
+                    onClick={onChangeFive}
+                    name="agreeToTerms"
+                  />
+                  {/* <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"> */}
+                  <label htmlFor="agreeToTerms">
+                    I Agree to the terms and conditions !
+                  </label>
+                </div>
               </div>
             </>
           ) : null}
@@ -938,9 +971,6 @@ return;
                   width: "110%",
                 }}
               >
-                {activeStep === 3 || activeStep === 4 ? (
-                  ""
-                ) : (
                   <Button
                     color="inherit"
                     disabled={activeStep === 0}
@@ -949,7 +979,6 @@ return;
                   >
                     Back
                   </Button>
-                )}
 
                 <Box sx={{ flex: "1 1 auto" }} />
                 {isStepOptional(activeStep) && (
@@ -977,18 +1006,25 @@ return;
 
                 {/* @@ HANDLE SUBMIT HERE !!! */}
                 {activeStep === steps.length - 1 && (
+                  <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+
                   <Button
                     onClick={() => {
-                      setActiveStep((prevActiveStep) => prevActiveStep + 1);
                       sendPartnerApproval();
                     }}
                     // disabled={stepperFormFive.agreeToTerms === false ? false : stepperFormFive.agreeToTerms === 'false' ? false : true}
-                    disabled={stepperFormFive.agreeToTerms === false ? true : stepperFormFive.agreeToTerms === 'false' ? true : false}
-                    
+                    disabled={
+                      stepperFormFive.agreeToTerms === false
+                        ? true
+                        : stepperFormFive.agreeToTerms === "false"
+                        ? true
+                        : false
+                    }
                   >
                     {" "}
                     Finish
                   </Button>
+                  </Box>
                 )}
               </Box>
             </>
