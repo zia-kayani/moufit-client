@@ -22,10 +22,11 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, db } from "../../../firebase-config";
+import { auth, db, storage } from "../../../firebase-config";
 import Snackbar from '@mui/material/Snackbar';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import CloseIcon from '@mui/icons-material/Close';
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // const steps = ["User", "Partner", "Bank", "Document", "Terms"];
 const steps = ["User", "Partner", "Document", "Terms"];
@@ -110,7 +111,7 @@ function JoinInForm() {
   const [skipped, setSkipped] = useState(new Set());
   const [nextBtnDisplay, setNextBtnDisplay] = useState(true);
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   let [stepperFormOne, setStepperFormOne] = useState({
     firstName: "",
@@ -226,7 +227,7 @@ function JoinInForm() {
         // isFormComplete = Object.values(stepperFormThree).every(
         //   (value) => value !== ""
         // );
-        isFormComplete  = true;
+        isFormComplete = true;
         break;
       case 3:
         // isFormComplete = Object.values(stepperFormThree).every(
@@ -501,6 +502,35 @@ function JoinInForm() {
     }
   };
 
+// Convert base64 string to a Blob
+const base64ToBlob = (base64) => {
+  if (!base64 || !base64.includes(',')) {
+    throw new Error("Invalid base64 string");
+  }
+  
+  const [meta, content] = base64.split(",");
+  const contentType = meta.match(/data:(.*);base64/)[1];
+  const byteCharacters = atob(content);
+  const byteArrays = Array.from({ length: Math.ceil(byteCharacters.length / 512) }, (_, offset) => {
+    const slice = byteCharacters.slice(offset * 512, (offset + 1) * 512);
+    return new Uint8Array(slice.split("").map((char) => char.charCodeAt(0)));
+  });
+  return new Blob(byteArrays, { type: contentType });
+};
+
+// Upload base64 data to Firebase Storage and return the download URL
+const uploadBase64File = async (base64String, filePath) => {
+  try {
+    const blob = base64ToBlob(base64String);
+    const storageRef = ref(storage, filePath);
+    const snapshot = await uploadBytes(storageRef, blob);
+    return getDownloadURL(snapshot.ref);
+  } catch (error) {
+    console.error(`Error uploading ${filePath}:`, error);
+    return null; // Return null if there was an error
+  }
+};
+
   const mapToCollectionFormat = (partnerData) => {
     const obj = {
       user_type: 2,
@@ -512,12 +542,9 @@ function JoinInForm() {
       business_phone: stepperFormTwo.businessPhone,
       is_agreed: stepperFormFive.agreeToTerms,
       documents: [
-        "1",
-        "2",
-        "3",
-        // stepperFormFour.file1,
-        // stepperFormFour.file2,
-        // stepperFormFour.file3,
+        stepperFormFour?.file1Url || "",
+        stepperFormFour?.file2Url || "",
+        stepperFormFour?.file3Url || "",
       ],
     };
 
@@ -534,7 +561,7 @@ function JoinInForm() {
 
     // create partner as user
     const partnerInfo = mapToCollectionFormat();
-    const password = '12345678'
+    const password = "12345678";
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
@@ -548,17 +575,31 @@ function JoinInForm() {
 
       const resp = await setDoc(doc(db, "users", partnerInfo.id), partnerInfo);
 
+      const uploadPromises = partnerInfo.documents.map((base64) => {
+        const [meta] = base64.split(",");
+        const contentType = meta.match(/data:(.*);base64/)[1];
+        const extension = contentType.split("/")[1]; // Get file extension from content type
+        const timestamp = Date.now(); // Get the current timestamp
+        const filePath = `files/${timestamp}.${extension}`; // Use timestamp as the filename
+        return uploadBase64File(base64, filePath);
+      });
+      
+      const downloadURLs = await Promise.all(uploadPromises);
+
+      // Filter out any null URLs resulting from failed uploads
+      const validURLs = downloadURLs.filter((url) => url !== null);
+      console.log("Uploaded successfully:", validURLs);
       if (resp == undefined) {
         // success
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setMessage('Account created Successfully!')
-        setOpen(true)
+        setMessage("Account created Successfully!");
+        setOpen(true);
       }
     } catch (error) {
       console.log("error", error);
       if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
         setOpen(true);
-        setMessage("Email already exists. Please try with another email!")
+        setMessage("Email already exists. Please try with another email!");
         console.log("error", error.message);
       }
     }
@@ -578,7 +619,7 @@ function JoinInForm() {
   }, [watch]);
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
@@ -598,13 +639,11 @@ function JoinInForm() {
     </React.Fragment>
   );
 
-  
-
   return (
     <>
       <Snackbar
         open={open}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={6000}
         onClose={handleClose}
         message={message}
@@ -693,9 +732,7 @@ function JoinInForm() {
                   <div key={index}>
                     {/* @@ ADD + ICON IN EVERY ROW, and send complete item to make  */}
                     {/* @@ duplicate entry of any location  */}
-                    <div
-                      className="dynamicSectionWrapper"
-                    >
+                    <div className="dynamicSectionWrapper">
                       {`Location ${index + 1}`}
                       <div>
                         {index === 0 ? (
@@ -914,14 +951,14 @@ function JoinInForm() {
                   width: "110%",
                 }}
               >
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
 
                 <Box sx={{ flex: "1 1 auto" }} />
                 {isStepOptional(activeStep) && (
@@ -949,24 +986,25 @@ function JoinInForm() {
 
                 {/* @@ HANDLE SUBMIT HERE !!! */}
                 {activeStep === steps.length - 1 && (
-                  <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-
-                  <Button
-                    onClick={() => {
-                      sendPartnerApproval();
-                    }}
-                    // disabled={stepperFormFive.agreeToTerms === false ? false : stepperFormFive.agreeToTerms === 'false' ? false : true}
-                    disabled={
-                      stepperFormFive.agreeToTerms === false
-                        ? true
-                        : stepperFormFive.agreeToTerms === "false"
-                        ? true
-                        : false
-                    }
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {" "}
-                    Finish
-                  </Button>
+                    <Button
+                      onClick={() => {
+                        sendPartnerApproval();
+                      }}
+                      // disabled={stepperFormFive.agreeToTerms === false ? false : stepperFormFive.agreeToTerms === 'false' ? false : true}
+                      disabled={
+                        stepperFormFive.agreeToTerms === false
+                          ? true
+                          : stepperFormFive.agreeToTerms === "false"
+                          ? true
+                          : false
+                      }
+                    >
+                      {" "}
+                      Finish
+                    </Button>
                   </Box>
                 )}
               </Box>
