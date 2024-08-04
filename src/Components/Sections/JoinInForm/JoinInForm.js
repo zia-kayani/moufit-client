@@ -27,7 +27,8 @@ import Snackbar from '@mui/material/Snackbar';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import CloseIcon from '@mui/icons-material/Close';
 
-const steps = ["User", "Partner", "Bank", "Document", "Terms"];
+// const steps = ["User", "Partner", "Bank", "Document", "Terms"];
+const steps = ["User", "Partner", "Document", "Terms"];
 const sampleRichText = `<p>Moufit DMCC is a DMCC Free Zone company incorporated under the laws of Dubai, United Arab Emirates with business licence number DMCC179386 (“Moufit”, “We”, “Our”, “Us”) and having its principal place of business at Office 106, The Binary, Al Abraj Street, Business Bay, P.O. Box 413383, Dubai, United Arab Emirates.</p>
 <p>Moufit is the owner and/or licensor of the Platform and is in the business of providing the Online Services.</p>
 <p>Gym Partner warrants and represents to Moufit that it is the entity specified in Part A | Particulars, and that:</p>
@@ -109,6 +110,7 @@ function JoinInForm() {
   const [skipped, setSkipped] = useState(new Set());
   const [nextBtnDisplay, setNextBtnDisplay] = useState(true);
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   let [stepperFormOne, setStepperFormOne] = useState({
     firstName: "",
@@ -217,46 +219,29 @@ function JoinInForm() {
         isFormComplete = Object.values(stepperFormTwo).every(
           (value) => value !== ""
         );
-        console.log("isFormComplete", isFormComplete);
         isFormComplete = checkUserFieldVals();
 
         break;
       case 2:
         // isFormComplete = Object.values(stepperFormThree).every(
-        //     (value) => value !== ""
-        //   );
-        // Check if all fields in stepperFormThree are filled
-        // if(stepperFormThree.file1 === '' && stepperFormThree.file2 === ''){
-        // console.log(stepperFormThree.file1)
-        //  console.log(stepperFormThree.file2)
-        //     // isFormComplete = true
-        // }
-        // isFormComplete =  stepperFormThree.file1 !== ""
-        // isFormComplete =  stepperFormThree.file2 !== ""
-
+        //   (value) => value !== ""
+        // );
+        isFormComplete  = true;
+        break;
+      case 3:
         // isFormComplete = Object.values(stepperFormThree).every(
         //   (value) => value !== ""
         // );
-        isFormComplete = Object.values(stepperFormThree).every(
-          (value) => value !== ""
-        );
-        break;
-      case 3:
-        isFormComplete = Object.values(stepperFormThree).every(
-          (value) => value !== ""
-        );
-        // isFormComplete =  stepperFormFour.file3 !== ""
-
-        // Check if all fields in stepperFormFour are filled
-        // isFormComplete = Object.values(stepperFormFour).every(
-        //   (value) => value !== ""
-        // );
-        break;
-      case 4:
-        // Check if all fields in stepperFormFive are filled
         isFormComplete = Object.values(stepperFormFive).every(
           (value) => value !== ""
         );
+        break;
+      case 4:
+        // Check if all fields in stepperFormFive are filled
+        // isFormComplete = Object.values(stepperFormFive).every(
+        //   (value) => value !== ""
+        // );
+        isFormComplete = true;
         break;
       default:
         // Default to true for other steps
@@ -420,14 +405,6 @@ function JoinInForm() {
     }
     console.log("stepperFormFive", stepperFormFive);
     console.log("stepperFormFour", stepperFormFour);
-
-    // console.log(e.target);
-    // console.log("The target name", e.target.name);
-    // console.log("The target value", e.target.value);
-    // setStepperFormFive((prevState) => ({
-    //     ...prevState,
-    //     [e.target.name]: e.target.value,
-    // }));
   };
 
   const isStepOptional = (step) => {
@@ -557,12 +534,12 @@ function JoinInForm() {
 
     // create partner as user
     const partnerInfo = mapToCollectionFormat();
-
+    const password = '12345678'
     try {
       const response = await createUserWithEmailAndPassword(
         auth,
         partnerInfo.email,
-        "12345678"
+        password
       );
       partnerInfo.id = response.user.uid;
 
@@ -571,16 +548,17 @@ function JoinInForm() {
 
       const resp = await setDoc(doc(db, "users", partnerInfo.id), partnerInfo);
 
-      if (resp) {
+      if (resp == undefined) {
         // success
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      } else {
-        // sommething went wrong
+        setMessage('Account created Successfully!')
+        setOpen(true)
       }
     } catch (error) {
       console.log("error", error);
       if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
         setOpen(true);
+        setMessage("Email already exists. Please try with another email!")
         console.log("error", error.message);
       }
     }
@@ -629,7 +607,7 @@ function JoinInForm() {
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Email already exists. Please signup using another email"
+        message={message}
         action={action}
       />
       <Box sx={{ width: "50%", margin: "50px auto" }}>
@@ -711,17 +689,12 @@ function JoinInForm() {
                   onChange={onChangeTwo}
                   name="businessPhone"
                 />
-                {/* <input className='commonInput commonTextarea' type='textarea' placeholder='Enter Full Address Here' value={stepperFormTwo.address} onChange={onChangeTwo} name="address" /> */}
-
-                {/* <input className='commonInput' type='text' placeholder='Location' value={stepperFormTwo.location} onChange={onChangeTwo} name="location" /> */}
-
                 {fields?.map((field, index) => (
                   <div key={index}>
                     {/* @@ ADD + ICON IN EVERY ROW, and send complete item to make  */}
                     {/* @@ duplicate entry of any location  */}
                     <div
                       className="dynamicSectionWrapper"
-                      // style={{ display: 'flex', justifyContent: "space-between", alignItems: "center", width: '110%', fontWeight: 'bold', color: 'black' }}
                     >
                       {`Location ${index + 1}`}
                       <div>
@@ -784,7 +757,8 @@ function JoinInForm() {
             </>
           ) : null}
 
-          {activeStep === 3 ? (
+          {/* {activeStep === 3 ? ( */}
+          {activeStep === 2 ? (
             <>
               <div className="inputContainer noyh-regular-moufit documentForm">
                 <label className="Commonlabel">Upload Trade License</label>
@@ -798,19 +772,7 @@ function JoinInForm() {
                   name="file1"
                   accept="image/png, image/jpeg, .doc, .docx,.pdf"
                   value={stepperFormFour?.file1 ?? ""}
-                  //   value={stepperFormThree?.file1?.substring(stepperFormThree?.file1?.lastIndexOf('-')+1) ?? ""}
-                  //   value={getValues('joinInForm.file1') ?? ""}
                   onChange={onChangeThree}
-                  //   onChange={onFilesChangeThree}
-
-                  //   onChange={handleImageChange}
-
-                  //   onChange={onFilesChangeThree}
-                  //   onChange={(e) => handleUseFormFileChange(e.target.files, 'file1')}
-
-                  //   onChange={(event) => {
-                  //     setFieldValue("file", event.currentTarget.files[0]);
-                  //   }}
                 />
                 <br />
                 <label className="Commonlabel">
@@ -824,22 +786,8 @@ function JoinInForm() {
                   className="input-feild commonUpload"
                   name="file2"
                   accept="image/png, image/jpeg, .doc, .docx,.pdf"
-                  //   value={stepperFormThree?.file2 ?? ""}
                   value={stepperFormFour?.file2 ?? ""}
-                  // value={stepperFormThree?.file2?.substring(stepperFormThree?.file2?.lastIndexOf('-')+1) ?? ""}
-
-                  // value={getValues('joinInForm.file2') ?? ""}
                   onChange={onChangeThree}
-                  // onChange={onFilesChangeThree}
-
-                  // onChange={handleImageChange}
-
-                  // onChange={(e) => handleUseFormFileChange(e.target.files, 'file2')}
-
-                  //   onChange={onFilesChangeThree}
-                  //   onChange={(event) => {
-                  //     setFieldValue("file2", event.currentTarget.files[0]);
-                  //   }}
                 />
                 <br />
 
@@ -851,23 +799,18 @@ function JoinInForm() {
                   type="file"
                   placeholder="Browse Files"
                   className="input-feild commonUpload"
-                  // value={file}
                   required
                   name="file3"
                   accept="image/png, image/jpeg, .doc, .docx,.pdf"
                   value={stepperFormFour?.file3 ?? ""}
                   onChange={onChangeThree}
-                  //   accept="image/png, image/jpeg"
-                  //   onChange={(event) => {
-                  //     setFieldValue("file", event.currentTarget.files[0]);
-                  //   }}
                 />
                 <br />
               </div>
             </>
           ) : null}
 
-          {activeStep === 2 ? (
+          {/* {activeStep === 2 ? (
             <>
               <div className="inputContainer noyh-regular-moufit bankForm">
                 <input
@@ -922,9 +865,9 @@ function JoinInForm() {
                 <br />
               </div>
             </>
-          ) : null}
+          ) : null} */}
 
-          {activeStep === 4 ? (
+          {activeStep === 3 ? (
             <>
               <div className="inputContainer noyh-regular-moufit termsForm">
                 <div dangerouslySetInnerHTML={{ __html: sampleRichText }} />
