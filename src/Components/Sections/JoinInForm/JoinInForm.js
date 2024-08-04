@@ -13,7 +13,7 @@ import {
   CheckBox,
   DeleteOutline,
 } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { Backdrop, CircularProgress, IconButton } from "@mui/material";
 import {
   addDoc,
   collection,
@@ -149,6 +149,8 @@ function JoinInForm() {
   let [stepperFormFive, setStepperFormFive] = useState({
     agreeToTerms: false,
   });
+  
+  const [loading, setLoading] = useState(false);
 
   const createDocument = async (companyName) => {
     try {
@@ -224,10 +226,8 @@ function JoinInForm() {
 
         break;
       case 2:
-        // isFormComplete = Object.values(stepperFormThree).every(
-        //   (value) => value !== ""
-        // );
-        isFormComplete = true;
+        isFormComplete = Object.values(stepperFormFour).every((value) => value !== "");
+        isFormComplete = isFormComplete;
         break;
       case 3:
         // isFormComplete = Object.values(stepperFormThree).every(
@@ -431,14 +431,16 @@ function JoinInForm() {
       console.log("activeStep", activeStep);
       // if(activeStep)
 
-      setStepperFormFour({
-        file1: "",
-        file1Url: "",
-        file2: "",
-        file2Url: "",
-        file3: "",
-        file3Url: "",
-      })
+      if(activeStep === 0 || activeStep === 1) {
+        setStepperFormFour({
+          file1: "",
+          file1Url: "",
+          file2: "",
+          file2Url: "",
+          file3: "",
+          file3Url: "",
+        })
+      }
     } catch (err) {
       console.error(err);
     }
@@ -569,13 +571,7 @@ const uploadBase64File = async (base64String, filePath) => {
   };
 
   const sendPartnerApproval = async () => {
-    console.log(
-      stepperFormOne,
-      stepperFormTwo,
-      stepperFormThree,
-      stepperFormFour
-    );
-
+   setLoading(true);
     // create partner as user
     const partnerInfo = mapToCollectionFormat();
     const password = "12345678";
@@ -606,18 +602,20 @@ const uploadBase64File = async (base64String, filePath) => {
       // Filter out any null URLs resulting from failed uploads
       const validURLs = downloadURLs.filter((url) => url !== null);
       console.log("Uploaded successfully:", validURLs);
-      if (resp == undefined) {
+      if (resp == undefined && validURLs) {
         // success
+        setLoading(false);
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setMessage("Account created Successfully!");
         setOpen(true);
       }
     } catch (error) {
       console.log("error", error);
+      setLoading(false);
       if (error?.message === "Firebase: Error (auth/email-already-in-use).") {
+      } else {
         setOpen(true);
-        setMessage("Email already exists. Please try with another email!");
-        console.log("error", error.message);
+        setMessage("Something went wrong! Please try again.");
       }
     }
     return;
@@ -658,6 +656,12 @@ const uploadBase64File = async (base64String, filePath) => {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: 999999 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Snackbar
         open={open}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
