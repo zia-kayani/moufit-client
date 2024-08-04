@@ -12,8 +12,9 @@ import { AddCircleOutlineOutlined, CheckBox, DeleteOutline } from "@mui/icons-ma
 import { IconButton } from "@mui/material";
 import { db } from "../../../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
-import { newDB } from "../../../firebase-new-config";
+import { newAuth, newDB } from "../../../firebase-new-config";
 import { stubFalse } from "lodash";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const steps = ["User", "Partner", "Bank", "Document", "Terms"];
 const sampleRichText = `<p>Moufit DMCC is a DMCC Free Zone company incorporated under the laws of Dubai, United Arab Emirates with business licence number DMCC179386 (“Moufit”, “We”, “Our”, “Us”) and having its principal place of business at Office 106, The Binary, Al Abraj Street, Business Bay, P.O. Box 413383, Dubai, United Arab Emirates.</p>
@@ -513,7 +514,54 @@ function JoinInForm() {
     }
   };
 
+  const mapToCollectionFormat = (partnerData) => {
+    const obj = {
+      user_type: 2,
+      first_name: stepperFormOne.firstName,
+      last_name: stepperFormOne.lastName,
+      phone: stepperFormOne.phone,
+      email: stepperFormOne.email,
+      business_name: stepperFormTwo.businessName,
+      business_phone: stepperFormTwo.businessPhone,
+      is_agreed: stepperFormFive.agreeToTerms,
+      documents: [
+        '1', '2', '3'
+        // stepperFormFour.file1,
+        // stepperFormFour.file2,
+        // stepperFormFour.file3,
+      ]
+    }
+
+    return obj;
+  }
+
   const sendPartnerApproval = async () => {
+    console.log(stepperFormOne,
+      stepperFormTwo,
+      stepperFormThree,
+      stepperFormFour,)
+
+      // create partner as user
+      const partnerInfo = mapToCollectionFormat();
+
+      try {
+        const response = await createUserWithEmailAndPassword(
+          newAuth,
+          partnerInfo.email,
+          "12345678"
+        );
+        partnerInfo.id = response.user.uid;
+
+        console.log('partnerInfo', partnerInfo)
+        // add partner's data to users collection
+        const newDBRef = collection(newDB, "users");
+        let tempResp = await addDoc(newDBRef, partnerInfo);
+        console.log("tempResp", tempResp);
+      } catch (error) {
+        console.log("error", error);
+      }
+return;
+
     const newDBRef = collection(newDB, "partners_approval");
     try {
       stepperFormTwo.locations = getValues("locations") || [];
