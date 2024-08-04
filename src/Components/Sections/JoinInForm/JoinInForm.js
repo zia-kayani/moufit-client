@@ -430,6 +430,15 @@ function JoinInForm() {
       setSkipped(newSkipped);
       console.log("activeStep", activeStep);
       // if(activeStep)
+
+      setStepperFormFour({
+        file1: "",
+        file1Url: "",
+        file2: "",
+        file2Url: "",
+        file3: "",
+        file3Url: "",
+      })
     } catch (err) {
       console.error(err);
     }
@@ -443,6 +452,14 @@ function JoinInForm() {
       } else {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
       }
+      setStepperFormFour({
+        file1: "",
+        file1Url: "",
+        file2: "",
+        file2Url: "",
+        file3: "",
+        file3Url: "",
+      })
     } catch (err) {
       console.error(err);
     }
@@ -832,6 +849,7 @@ const uploadBase64File = async (base64String, filePath) => {
                   Upload either certified and stamped document by the bank with
                   having the information mentioned above OR Cancelled Cheque.
                 </label>
+
                 <input
                   type="file"
                   placeholder="Browse Files"
