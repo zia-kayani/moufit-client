@@ -18,6 +18,7 @@ import {
   addDoc,
   collection,
   doc,
+  GeoPoint,
   getDoc,
   setDoc,
   updateDoc,
@@ -27,6 +28,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import CloseIcon from '@mui/icons-material/Close';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import AddressLookup from './AddressLookup'
 
 // const steps = ["User", "Partner", "Bank", "Document", "Terms"];
 const steps = ["User", "Partner", "Document", "Terms"];
@@ -404,8 +406,6 @@ function JoinInForm() {
     } catch (err) {
       console.error(err);
     }
-    console.log("stepperFormFive", stepperFormFive);
-    console.log("stepperFormFour", stepperFormFour);
   };
 
   const isStepOptional = (step) => {
@@ -428,8 +428,6 @@ function JoinInForm() {
 
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       setSkipped(newSkipped);
-      console.log("activeStep", activeStep);
-      // if(activeStep)
 
       if(activeStep === 0 || activeStep === 1) {
         setStepperFormFour({
@@ -447,7 +445,6 @@ function JoinInForm() {
   };
 
   const handleBack = () => {
-    console.log("activeStep", activeStep);
     try {
       if (activeStep === 3) {
         setActiveStep(activeStep - 1);
@@ -565,13 +562,14 @@ const uploadBase64File = async (base64String, filePath) => {
         stepperFormFour?.file2Url || "",
         stepperFormFour?.file3Url || "",
       ],
+      status: 'pending',
     };
 
     return obj;
   };
 
   const sendPartnerApproval = async () => {
-   setLoading(true);
+    setLoading(true);
     // create partner as user
     const partnerInfo = mapToCollectionFormat();
     const password = "12345678";
@@ -583,10 +581,21 @@ const uploadBase64File = async (base64String, filePath) => {
       );
       partnerInfo.id = response.user.uid;
 
-      console.log("partnerInfo", partnerInfo);
+      let locations = getValues('locations')
+      locations = locations.map((location) => ({...location, lat_long: new GeoPoint(location.lat, location.long) , partner_id: partnerInfo.id}))
       // add partner's data to users collection
 
+      console.log('partnerInfo', partnerInfo)
+
       const resp = await setDoc(doc(db, "users", partnerInfo.id), partnerInfo);
+
+      const locationPromises = locations.map(async (item, index) => {
+        const docRef = await setDoc(doc(db, 'locations', partnerInfo.id + '-' +index), item);
+        console.log('Document written with ID: ', docRef);
+      });
+  
+      await Promise.all(locationPromises); // Wait for all uploads to complete
+
 
       const uploadPromises = partnerInfo.documents.map((base64) => {
         const [meta] = base64.split(",");
@@ -653,6 +662,23 @@ const uploadBase64File = async (base64String, filePath) => {
       </IconButton>
     </React.Fragment>
   );
+
+  const isAddressFieldEmpty = () => {
+    const locations = getValues('locations');
+    const isAddressEmpty = locations.some(item => !item.address1 || item.address1.trim() === "");
+    return !isAddressEmpty;
+  };
+
+  const isStepTwoComplete = () => {
+    if(activeStep === 1) {
+      if (stepperFormTwo.businessName === '') return true;
+      if (stepperFormTwo.businessPhone === '')return true;
+
+      isAddressFieldEmpty()
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
@@ -750,7 +776,7 @@ const uploadBase64File = async (base64String, filePath) => {
                   name="businessPhone"
                 />
                 {fields?.map((field, index) => (
-                  <div key={index}>
+                  <React.Fragment key={index}>
                     {/* @@ ADD + ICON IN EVERY ROW, and send complete item to make  */}
                     {/* @@ duplicate entry of any location  */}
                     <div className="dynamicSectionWrapper">
@@ -778,7 +804,6 @@ const uploadBase64File = async (base64String, filePath) => {
                         )}
                       </div>
                     </div>
-                    {/* <button onClick={(e) => handleAddLocations(field, index, e)}>+</button> */}
 
                     <DynamicUseFormInput
                       data={{ index, target: "name" }}
@@ -786,30 +811,13 @@ const uploadBase64File = async (base64String, filePath) => {
                       setNextBtnDisplay={setNextBtnDisplay}
                     />
 
-                    {/* <DynamicUseFormInput data={{index, target: 'newEntry'}} useFormPropsObj={{register, getValues, setValue}} /> */}
-                    <div className="longLatContainer">
-                      <DynamicUseFormInput
-                        data={{ index, target: "lat" }}
-                        useFormPropsObj={useFormPropsObj}
-                        setNextBtnDisplay={setNextBtnDisplay}
-                      />
-                      <DynamicUseFormInput
-                        data={{ index, target: "long" }}
-                        useFormPropsObj={useFormPropsObj}
-                        setNextBtnDisplay={setNextBtnDisplay}
-                      />
-                    </div>
-                    <DynamicUseFormInput
-                      data={{ index, target: "address1" }}
-                      useFormPropsObj={useFormPropsObj}
+                    <AddressLookup  
+                      data={{ index, target: "" }} 
                       setNextBtnDisplay={setNextBtnDisplay}
-                    />
-                    <DynamicUseFormInput
-                      data={{ index, target: "address2" }}
                       useFormPropsObj={useFormPropsObj}
-                      setNextBtnDisplay={setNextBtnDisplay}
+                      setStepperFormTwo={setStepperFormTwo}
                     />
-                  </div>
+                  </React.Fragment>
                 ))}
               </div>
             </>
@@ -970,7 +978,7 @@ const uploadBase64File = async (base64String, filePath) => {
                   display: "flex",
                   flexDirection: "row",
                   pt: 2,
-                  width: "110%",
+                  width: "100%",
                 }}
               >
                 <Button
@@ -988,14 +996,14 @@ const uploadBase64File = async (base64String, filePath) => {
                     Skip
                   </Button>
                 )}
-                {/* {(activeStep !==2 || activeStep !== 3 )&& */}
-                {activeStep !== steps.length - 1 ? (
-                  <Button
+
+                {((activeStep !== steps.length - 1 )) ?
+                  (<Button
                     onClick={() => {
                       handleNext();
                       setNextBtnDisplay(false);
                     }}
-                    disabled={!nextBtnDisplay}
+                    disabled={activeStep !==1 ? !nextBtnDisplay : isStepTwoComplete()}
                     sx={{ display: "block" }}
                   >
                     Next
