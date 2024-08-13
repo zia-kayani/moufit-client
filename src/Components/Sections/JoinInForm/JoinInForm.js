@@ -711,7 +711,7 @@ const uploadBase64File = async (base64String, filePath) => {
             }
             return (
               <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
+                <StepLabel sx={{paddingBottom: '0.25rem'}} {...labelProps}>{label}</StepLabel>
               </Step>
             );
           })}
