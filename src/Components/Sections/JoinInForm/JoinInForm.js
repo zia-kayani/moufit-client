@@ -697,7 +697,7 @@ const uploadBase64File = async (base64String, filePath) => {
         action={action}
       />
       <Box sx={{ width: "50%", margin: "50px auto" }}>
-        <Stepper activeStep={activeStep}>
+        <Stepper activeStep={activeStep} sx={{flexWrap: 'wrap'}}>
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
