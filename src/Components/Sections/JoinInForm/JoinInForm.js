@@ -938,7 +938,9 @@ const uploadBase64File = async (base64String, filePath) => {
             <>
               <div className="inputContainer noyh-regular-moufit termsForm">
                 <div dangerouslySetInnerHTML={{ __html: sampleRichText }} />
-                <div
+              </div>
+              <>
+              <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -956,7 +958,7 @@ const uploadBase64File = async (base64String, filePath) => {
                     I Agree to the terms and conditions !
                   </label>
                 </div>
-              </div>
+              </>
             </>
           ) : null}
 
