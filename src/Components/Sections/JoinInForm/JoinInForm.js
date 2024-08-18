@@ -563,6 +563,7 @@ const uploadBase64File = async (base64String, filePath) => {
         stepperFormFour?.file2Url || "",
         stepperFormFour?.file3Url || "",
       ],
+      region: "none",
       status: 'pending',
     };
 
