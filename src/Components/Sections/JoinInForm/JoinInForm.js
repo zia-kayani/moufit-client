@@ -29,6 +29,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import CloseIcon from '@mui/icons-material/Close';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import AddressLookup from './AddressLookup'
+import { getUniqueId } from "../../../utils";
 
 // const steps = ["User", "Partner", "Bank", "Document", "Terms"];
 const steps = ["User", "Partner", "Document", "Terms"];
@@ -590,8 +591,9 @@ const uploadBase64File = async (base64String, filePath) => {
       const resp = await setDoc(doc(db, "users", partnerInfo.id), partnerInfo);
 
       const locationPromises = locations.map(async (item, index) => {
-        const docRef = await setDoc(doc(db, 'locations', partnerInfo.id + '-' +index), item);
-        console.log('Document written with ID: ', docRef);
+        const uniqueId = getUniqueId()
+        console.log('uniqueId', uniqueId)
+        const docRef = await setDoc(doc(db, 'locations', uniqueId), item);
       });
   
       await Promise.all(locationPromises); // Wait for all uploads to complete
