@@ -68,14 +68,13 @@ const SimpleImgSlider = ({ title, pictures, body }) => {
 
             imagesToDisplay.push(
              
-                <div className="single-img-wrapper">
+                <div className="single-img-wrapper" key={i}>
                 <img
-                    key={i}
-                    style={{
-                        width: '270px',
-                        height: '200px',
-                        objectFit: 'contain', // Adjust this property as needed
-                      }}                    // src={typeof(picture) !== 'string' ? console.log(picture) : picture?.url || picture?.imgSrc || picture?.img || picture || ''}
+                     style={{
+                        width: '100%', // Make images responsive
+                        height: 'auto',
+                        objectFit: 'contain',
+                    }}                    // src={typeof(picture) !== 'string' ? console.log(picture) : picture?.url || picture?.imgSrc || picture?.img || picture || ''}
                     src={picture?.url || picture?.imgUrl || picture?.imgSrc || picture?.img || picture || ''}
 
                     alt={`Slide ${i + 1}`}
